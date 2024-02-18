@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private void SetDestination(Vector3 target)
     {
         clickMarkerPrefab.SetActive(true);
+        clickMarkerPrefab.transform.SetParent(transform.parent, false); // set parent to the same parent as the player (to avoid scaling issues)
         clickMarkerPrefab.transform.position = target;
         agent.SetDestination(target);
 
