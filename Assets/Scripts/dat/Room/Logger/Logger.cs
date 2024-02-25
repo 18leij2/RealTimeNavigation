@@ -4,143 +4,177 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Serializable attribute allows the Logger class to be serialized
 [Serializable]
 public class Logger : MonoBehaviour
 {
-	public GameObject PlayerObj;
-	public Camera TrackedCamera;
+    // Public variables accessible in Unity Editor
+    public GameObject PlayerObj;    // The GameObject of the player
+    public Camera TrackedCamera;    // The Camera to track
 
-	[Header("Settings")]
-	[SerializeField] private bool loggingEnable = false;
-	[SerializeField] private bool overwriteEnable = false;
-	[SerializeField] private string filename;
-	private string filepath;
+    // Serialized private variables, visible in Unity Editor
+    [Header("Settings")]
+    [SerializeField] private bool loggingEnable = false;    // Enable logging
+    [SerializeField] private bool overwriteEnable = false;  // Enable overwrite existing log
+    [SerializeField] private string filename;               // Name of the log file
+    private string filepath;                                  // Full path of the log file
 
-	private string fileExt;
+    private string fileExt;  // File extension (in this case, ".csv")
 
-	private float startTime = 0f;
-	private float elapsedTime = 0f;
+    private float startTime = 0f;     // Time when logging starts
+    private float elapsedTime = 0f;   // Elapsed time since logging started
 
-	void Awake()
-	{
+    // Called when the script instance is being loaded
+    void Awake()
+    {
+        // Nothing in Awake for this script
+    }
 
-	}
+    // Called before the first frame update
+    void Start()
+    {
+        fileExt = ".csv";   // Setting the file extension
 
-	void Start()
-	{
-		fileExt = ".csv";
+        // Get the full path for the log file
+        filepath = GetFilePath(filename);
 
-		filepath = GetFilePath(filename);
-		WriteHeader();
+        // Write the header for the CSV file
+        WriteHeader();
 
-		startTime = Time.time;
+        // Record the starting time for logging
+        startTime = Time.time;
 
-		if (loggingEnable)
-		{
-			print("Logging Enabled.");
-			if (overwriteEnable)
-			{
-				print("Overwrite Enabled.");
-			}
-		}
+        // Print messages based on logging settings
+        if (loggingEnable)
+        {
+            print("Logging Enabled.");
+            if (overwriteEnable)
+            {
+                print("Overwrite Enabled.");
+            }
+        }
+    }
 
-	}
+    // Called every fixed framerate frame
+    void FixedUpdate()
+    {
+        // Calculate elapsed time
+        elapsedTime = Time.time - startTime;
 
-	void FixedUpdate()
-	{
-		elapsedTime = Time.time - startTime;
-		if (loggingEnable)
-		{
-			Log();
-		}
-	}
+        // If logging is enabled, log data
+        if (loggingEnable)
+        {
+            Log();
+        }
+    }
 
-	private string GetFilePath(string filename)
-	{
-		int cntr = 1;
+    // Function to get the file path for the log file
+    private string GetFilePath(string filename)
+    {
+        int cntr = 1;
 
-		string filepath = Directory.GetCurrentDirectory() + "\\DataCollected\\" + filename;
-		string filepath_w_ext = filepath + fileExt;
-		string newFilepath;
+        // Create the initial filepath
+        string filepath = Directory.GetCurrentDirectory() + "\\DataCollected\\" + filename;
+        string filepath_w_ext = filepath + fileExt;
+        string newFilepath;
 
-		if (!File.Exists(filepath_w_ext))
-		{
-			return filepath_w_ext;
-		}
+        // If the file does not exist, return the filepath
+        if (!File.Exists(filepath_w_ext))
+        {
+            return filepath_w_ext;
+        }
 
-		if (overwriteEnable)
-		{
-			File.Delete(filepath_w_ext);
-			return filepath_w_ext;
-		}
+        // If overwrite is enabled, delete the existing file and return filepath
+        if (overwriteEnable)
+        {
+            File.Delete(filepath_w_ext);
+            return filepath_w_ext;
+        }
 
-		while (true)
-		{
-			newFilepath = filepath + "(" + cntr.ToString() + ")" + fileExt;
+        // If the file exists and overwrite is not enabled, find a new filename
+        while (true)
+        {
+            newFilepath = filepath + "(" + cntr.ToString() + ")" + fileExt;
 
+            if (!File.Exists(newFilepath))
+            {
+                return newFilepath;
+            }
 
-			if (!File.Exists(newFilepath))
-			{
-				return newFilepath;
-			}
+            cntr++;
+        }
+    }
 
-			cntr++;
-		}
-	}
+    // Function to write the header of the CSV file
+    private void WriteHeader()
+    {
+        // Array of header values
+        string[] header = new string[] {
+            "Time",
+            "X",
+            "Y",
+            "Heading",
+            "CameraX",
+            "CameraY",
+            "CameraZ",
+            "CameraAngX",
+            "CameraAngY",
+            "CameraAngZ",
+        };
 
-	private void WriteHeader()
-	{
-		string[] header = new string[] {
-			"Time",
-			"X",
-			"Y",
-			"Heading",
-			"CameraX",
-			"CameraY",
-			"CameraZ",
-			"CameraAngX",
-			"CameraAngY",
-			"CameraAngZ",
-		};
-		string headerStr = string.Join(",", header);
-		WriteString(filepath, headerStr);
-	}
+        // Join header array into a single string
+        string headerStr = string.Join(",", header);
 
+        // Write the header string to the CSV file
+        WriteString(filepath, headerStr);
+    }
 
-	private void WriteString(string filepath, string outStr)
-	{
-		StreamWriter writer = new StreamWriter(filepath, true);
-		writer.WriteLine(outStr);
-		writer.Close();
-	}
+    // Function to write a string to a file
+    private void WriteString(string filepath, string outStr)
+    {
+        // Create a StreamWriter to write to the file
+        StreamWriter writer = new StreamWriter(filepath, true);
 
-	private void Log()
-	{
-		string elapsedTimeString = elapsedTime.ToString();
-		string playerX = PlayerObj.transform.position.x.ToString();
-		string playerY = PlayerObj.transform.position.z.ToString();
-		string playerHeading = PlayerObj.transform.eulerAngles.y.ToString();
-		string cameraX = TrackedCamera.transform.position.x.ToString();
-		string cameraY = TrackedCamera.transform.position.y.ToString();
-		string cameraZ = TrackedCamera.transform.position.z.ToString();
-		string cameraAngX = TrackedCamera.transform.eulerAngles.x.ToString();
-		string cameraAngY = TrackedCamera.transform.eulerAngles.y.ToString();
-		string cameraAngZ = TrackedCamera.transform.eulerAngles.z.ToString();
+        // Write the string and go to the next line
+        writer.WriteLine(outStr);
 
-		string[] outArr = new string[] {
-			elapsedTimeString,
-			playerX,
-			playerY,
-			playerHeading,
-			cameraX,
-			cameraY,
-			cameraZ,
-			cameraAngX,
-			cameraAngY,
-			cameraAngZ,
-		};
+        // Close the StreamWriter
+        writer.Close();
+    }
 
-		string outStr = string.Join(", ", outArr);
-		WriteString(filepath, outStr);
-	}
+    // Function to log data to the CSV file
+    private void Log()
+    {
+        // Convert various data to strings for logging
+        string elapsedTimeString = elapsedTime.ToString();
+        string playerX = PlayerObj.transform.position.x.ToString();
+        string playerY = PlayerObj.transform.position.z.ToString();
+        string playerHeading = PlayerObj.transform.eulerAngles.y.ToString();
+        string cameraX = TrackedCamera.transform.position.x.ToString();
+        string cameraY = TrackedCamera.transform.position.y.ToString();
+        string cameraZ = TrackedCamera.transform.position.z.ToString();
+        string cameraAngX = TrackedCamera.transform.eulerAngles.x.ToString();
+        string cameraAngY = TrackedCamera.transform.eulerAngles.y.ToString();
+        string cameraAngZ = TrackedCamera.transform.eulerAngles.z.ToString();
+
+        // Array of data values
+        string[] outArr = new string[] {
+            elapsedTimeString,
+            playerX,
+            playerY,
+            playerHeading,
+            cameraX,
+            cameraY,
+            cameraZ,
+            cameraAngX,
+            cameraAngY,
+            cameraAngZ,
+        };
+
+        // Join data array into a single string
+        string outStr = string.Join(", ", outArr);
+
+        // Write the data string to the CSV file
+        WriteString(filepath, outStr);
+    }
 }
