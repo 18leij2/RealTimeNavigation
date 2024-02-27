@@ -11,7 +11,7 @@ public class OldPlayerController : MonoBehaviour
     private NavMeshPath path;
 
     private LineRenderer myLineRenderer;
-    private bool isDrawing = false;
+    //private bool isDrawing = false;
     [SerializeField] private GameObject clickMarkerPrefab;
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class OldPlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             ClickToMove();
-            isDrawing = true;
+            //isDrawing = true;
         }
         while(clickMarkerPrefab.activeSelf){
             DrawPath();
