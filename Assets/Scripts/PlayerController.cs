@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
+    public Transform TrackedPlayerPos;
     private NavMeshAgent agent;
     private NavMeshPath path;
     private LineRenderer myLineRenderer;
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         path = new NavMeshPath();
+        agent.nextPosition = TrackedPlayerPos.position;
         // first arg is target
         if (agent.CalculatePath(clickMarkerPrefab.transform.position, path))
         {
