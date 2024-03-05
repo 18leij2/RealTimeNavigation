@@ -37,10 +37,10 @@ public class RollbackForwardSimulate : MonoBehaviour
     }
 
 
-    public Dictionary<GameObject, List<CFrame>> RecordTimeline()
+    public void RecordTimeline()
     {
         GameObject[] recordedObjs = Extensions.FindGameObjectsInLayer(LayerMask.NameToLayer("Recordable"));
-
+        Debug.Log(recordedObjs.Length);
         float oldTimeScale = Time.timeScale;
         Time.timeScale = TimeScaleSpeed;
 
@@ -53,6 +53,7 @@ public class RollbackForwardSimulate : MonoBehaviour
                     {
                         positionTimeline.Add(obj, new List<CFrame>());
                     }
+
                     positionTimeline[obj].Add(obj.transform.GetCFrame());
 
                 }
@@ -69,13 +70,6 @@ public class RollbackForwardSimulate : MonoBehaviour
                 return false;
             }
         ));
-
-        Debug.Log("dsad");
-        foreach (KeyValuePair<GameObject, List<CFrame>> obj in positionTimeline)
-        {
-            Debug.Log(obj.ToString());
-        }
-        return positionTimeline;
     }
 
     private void Start()
