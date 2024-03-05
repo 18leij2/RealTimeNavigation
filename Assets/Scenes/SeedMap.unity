@@ -498,7 +498,9 @@ MonoBehaviour:
   movingObjects:
   - {fileID: 2449341353758095693, guid: 09dcc55d22d83bb4cb97b2b74423f542, type: 3}
   wallObjectsCount: 4
-  movingObjectsCount: 3
+  movingObjectsCount: 4
+  player: {fileID: 2140909803}
+  target: {fileID: 1999314557}
 --- !u!114 &1138957330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,7 +513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ae769e7a7be145419b8375706ac884a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSeed: jason
+  gameSeed: ryan
   currentSeed: 0
 --- !u!4 &1138957331
 Transform:
@@ -532,6 +534,11 @@ Transform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1517634604492484959, guid: c6ad84587c4add3419ed6f8e35ede290, type: 3}
   m_PrefabInstance: {fileID: 937159635}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2140909803 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4129575525321952851, guid: 423e25a58609a86418bd7a1b3d0ec74c, type: 3}
+  m_PrefabInstance: {fileID: 4129575525744119157}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4129575525744119157
 PrefabInstance:
