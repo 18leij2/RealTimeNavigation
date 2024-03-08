@@ -11,7 +11,6 @@ public class Logger : MonoBehaviour
     // Public variables accessible in Unity Editor
     public GameObject PlayerObj;    // The GameObject of the player
     public Camera TrackedCamera;    // The Camera to track
-    public Transform GoalObj;       // The goal of the player
 
     // Serialized private variables, visible in Unity Editor
     [Header("Settings")]
@@ -121,9 +120,6 @@ public class Logger : MonoBehaviour
             "CameraAngX",
             "CameraAngY",
             "CameraAngZ",
-            "GoalX",
-            "GoalY",
-            "DistanceToGoal"
         };
 
         // Join header array into a single string
@@ -160,9 +156,6 @@ public class Logger : MonoBehaviour
         string cameraAngX = TrackedCamera.transform.eulerAngles.x.ToString();
         string cameraAngY = TrackedCamera.transform.eulerAngles.y.ToString();
         string cameraAngZ = TrackedCamera.transform.eulerAngles.z.ToString();
-        string goalX = GoalObj.transform.position.x.ToString();
-        string goalY = GoalObj.transform.position.y.ToString();
-        string distanceToGoal = Vector3.Distance(PlayerObj.transform.position, GoalObj.transform.position).ToString();
 
         // Array of data values
         string[] outArr = new string[] {
@@ -176,9 +169,6 @@ public class Logger : MonoBehaviour
             cameraAngX,
             cameraAngY,
             cameraAngZ,
-            goalX,
-            goalY,
-            distanceToGoal
         };
 
         // Join data array into a single string
