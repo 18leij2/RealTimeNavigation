@@ -7,7 +7,9 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
+    public Transform TrackedPlayerPos;
     private NavMeshAgent agent;
+    private NavMeshPath path;
     private LineRenderer myLineRenderer;
     [SerializeField] private GameObject clickMarkerPrefab;
     // Start is called before the first frame update
@@ -23,23 +25,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        path = new NavMeshPath();
+        agent.nextPosition = TrackedPlayerPos.position;
+        // first arg is target
+        if (agent.CalculatePath(clickMarkerPrefab.transform.position, path))
         {
-            ClickToMove();
-        }
-        if (agent.hasPath)
-        {
+            // Path calculation was successful.
+            // The 'path.corners' array now contains the points of the path.
             DrawPath();
-        }
-    }
-    private void ClickToMove()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        bool hasHit = Physics.Raycast(ray, out hit);
-        if (hasHit)
-        {
-            SetDestination(hit.point);
         }
     }
     private void SetDestination(Vector3 target)
@@ -53,15 +46,15 @@ public class PlayerController : MonoBehaviour
     // Draw a path from the player to the destination (w Navmesh)
     void DrawPath(){
         // if straight line, no need to draw path
-        if(agent.path.corners.Length < 2) return;
-        myLineRenderer.positionCount = agent.path.corners.Length; // checks the number of corners in the path
-        myLineRenderer.SetPositions(agent.path.corners);
+        if(path.corners.Length < 2) return;
+        myLineRenderer.positionCount = path.corners.Length; // checks the number of corners in the path
+        myLineRenderer.SetPositions(path.corners);
 
         // add each point to the line renderer
-        for (int i = 0; i < agent.path.corners.Length; i++)
+        for (int i = 0; i < path.corners.Length; i++)
         {
             // we add stuff to y to make the line "hover" above the ground
-            Vector3 pointPosition = new Vector3(agent.path.corners[i].x, agent.path.corners[i].y + 0.1f, agent.path.corners[i].z);
+            Vector3 pointPosition = new Vector3(path.corners[i].x, path.corners[i].y + 0.1f, path.corners[i].z);
             myLineRenderer.SetPosition(i, pointPosition);
         }
     }
