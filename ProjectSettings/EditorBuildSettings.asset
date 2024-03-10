@@ -5,10 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/Elise 1.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
-    path: Assets/Scenes/Elise 2.unity
-    guid: f8f10d5db3a2c9047b6dd3b6668818e8
-  m_configObjects: {}
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: efee4ef673e2e2b4fa13810ece3fa235, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4d68a31ccfdefff4da13ab6628ec46a9, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 67ccd419a4d771d40bea8f1ddfbe2dfe, type: 2}
