@@ -33,6 +33,8 @@ public class ReplaySystem : MonoBehaviour
     {
         // Read the CSV file and populate the replayDataList
         replayDataList = ReadCSVFile(Directory.GetCurrentDirectory() + "\\DataCollected\\" + fileName + fileExt);
+
+        Debug.Log(replayDataList.Count);
     }
 
     void Update()
@@ -63,6 +65,7 @@ public class ReplaySystem : MonoBehaviour
 
     private List<ReplayData> ReadCSVFile(string filePath)
     {
+        Debug.Log(filePath);
         List<ReplayData> replayDataList = new List<ReplayData>();
 
         if (File.Exists(filePath))
@@ -74,17 +77,15 @@ public class ReplaySystem : MonoBehaviour
             {
                 string[] values = lines[i].Split(',');
 
-                if (values.Length == 10)
-                {
-                    ReplayData data = new ReplayData();
-                    data.time = float.Parse(values[0]);
-                    data.playerPosition = new Vector3(float.Parse(values[1]), 0, float.Parse(values[2]));
-                    data.playerHeading = float.Parse(values[3]);
-                    data.cameraPosition = new Vector3(float.Parse(values[4]), float.Parse(values[5]), float.Parse(values[6]));
-                    data.cameraRotation = new Vector3(float.Parse(values[7]), float.Parse(values[8]), float.Parse(values[9]));
 
-                    replayDataList.Add(data);
-                }
+                ReplayData data = new ReplayData();
+                data.time = float.Parse(values[0]);
+                data.playerPosition = new Vector3(float.Parse(values[1]), 0, float.Parse(values[2]));
+                data.playerHeading = float.Parse(values[3]);
+                data.cameraPosition = new Vector3(float.Parse(values[4]), float.Parse(values[5]), float.Parse(values[6]));
+                data.cameraRotation = new Vector3(float.Parse(values[7]), float.Parse(values[8]), float.Parse(values[9]));
+
+                replayDataList.Add(data);
             }
         } else {
             throw new FileNotFoundException("Error: File " + filePath + " not found!");
