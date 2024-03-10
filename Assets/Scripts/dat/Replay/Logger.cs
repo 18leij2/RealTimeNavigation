@@ -6,7 +6,7 @@ using UnityEngine;
 
 // Serializable attribute allows the Logger class to be serialized
 [Serializable]
-public class Logger : MonoBehaviour
+public class Logger : Singleton<Logger>
 {
     // Public variables accessible in Unity Editor
     public GameObject PlayerObj;    // The GameObject of the player
@@ -24,11 +24,6 @@ public class Logger : MonoBehaviour
     private float startTime = 0f;     // Time when logging starts
     private float elapsedTime = 0f;   // Elapsed time since logging started
 
-    // Called when the script instance is being loaded
-    void Awake()
-    {
-        // Nothing in Awake for this script
-    }
 
     // Called before the first frame update
     void Start()
