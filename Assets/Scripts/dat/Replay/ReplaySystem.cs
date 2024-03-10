@@ -13,6 +13,7 @@ public class ReplaySystem : MonoBehaviour
 
     public float replaySpeed = 1.0f; // Adjust the replay speed
 
+    private string fileExt = ".csv";  // File extension (in this case, ".csv")
 
     private List<ReplayData> replayDataList;
     private int currentDataIndex = 0;
@@ -31,12 +32,12 @@ public class ReplaySystem : MonoBehaviour
     void Start()
     {
         // Read the CSV file and populate the replayDataList
-        replayDataList = ReadCSVFile(Directory.GetCurrentDirectory() + "\\DataCollected\\" + fileName);
+        replayDataList = ReadCSVFile(Directory.GetCurrentDirectory() + "\\DataCollected\\" + fileName + fileExt);
     }
 
     void Update()
     {
-        if (replayDataList.Count > 0)
+        if (replayDataList != null && replayDataList.Count > 0)
         {
             timer += Time.deltaTime;
             float timeStep = replayDataList[currentDataIndex].time / replaySpeed;
@@ -85,6 +86,8 @@ public class ReplaySystem : MonoBehaviour
                     replayDataList.Add(data);
                 }
             }
+        } else {
+            throw new FileNotFoundException("Error: File " + filePath + " not found!");
         }
 
         return replayDataList;
