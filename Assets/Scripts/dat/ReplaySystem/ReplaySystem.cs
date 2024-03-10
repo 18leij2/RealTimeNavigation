@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using System.Reflection;
 
 public class ReplaySystem : MonoBehaviour
 {
     public GameObject playerObj;
     public Camera trackedCamera;
+    public Transform trackedGoal;
 
     public String fileName;
 
@@ -27,10 +29,21 @@ public class ReplaySystem : MonoBehaviour
         public float playerHeading;
         public Vector3 cameraPosition;
         public Vector3 cameraRotation;
+        public Vector3 goalPosition;
     }
 
     void Start()
     {
+        if (playerObj == null) {
+            throw new MissingReferenceException("Error: No player object found!");
+        }
+        if (trackedCamera == null) {
+            throw new MissingReferenceException("Error: No tracked camera found!");
+        }
+        if (trackedGoal == null) {
+            throw new MissingReferenceException("Error: No tracked goal found!");
+        }
+
         // Read the CSV file and populate the replayDataList
         replayDataList = ReadCSVFile(Directory.GetCurrentDirectory() + "\\DataCollected\\" + fileName + fileExt);
 
@@ -51,8 +64,8 @@ public class ReplaySystem : MonoBehaviour
                 playerObj.transform.rotation = Quaternion.Euler(0, replayDataList[currentDataIndex].playerHeading, 0);
                 trackedCamera.transform.position = replayDataList[currentDataIndex].cameraPosition;
                 trackedCamera.transform.rotation = Quaternion.Euler(replayDataList[currentDataIndex].cameraRotation);
+                trackedGoal.position = replayDataList[currentDataIndex].goalPosition;
 
-                timer = 0.0f;
                 currentDataIndex++;
 
                 if (currentDataIndex >= replayDataList.Count)
@@ -84,7 +97,7 @@ public class ReplaySystem : MonoBehaviour
                 data.playerHeading = float.Parse(values[3]);
                 data.cameraPosition = new Vector3(float.Parse(values[4]), float.Parse(values[5]), float.Parse(values[6]));
                 data.cameraRotation = new Vector3(float.Parse(values[7]), float.Parse(values[8]), float.Parse(values[9]));
-
+                data.goalPosition = new Vector3(float.Parse(values[10]), 0, float.Parse(values[11]));
                 replayDataList.Add(data);
             }
         } else {
