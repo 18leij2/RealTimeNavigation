@@ -167,6 +167,55 @@ Transform:
   m_Father: {fileID: 274088443}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &80187467
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 80187469}
+  - component: {fileID: 80187468}
+  m_Layer: 0
+  m_Name: ReplaySystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &80187468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80187467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e11faac285d57a3449a3524b1845f558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObj: {fileID: 2004495198}
+  trackedCamera: {fileID: 1529317718}
+  trackedGoal: {fileID: 1999314558}
+  fileName: Trial4
+  replaySpeed: 1
+--- !u!4 &80187469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80187467}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.4389591, y: 3.2451842, z: -1.5780523}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &92800723
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,8 +306,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 92800723}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.03, z: 0}
-  m_LocalScale: {x: 8, y: 1, z: 8}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalScale: {x: 8, y: 0.1, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -419,11 +468,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413654462}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.96, z: 0}
   m_LocalScale: {x: 0.25, y: 1, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1634809852}
+  m_Father: {fileID: 2004495199}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &413654464
@@ -733,7 +782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1517634604492484947, guid: c6ad84587c4add3419ed6f8e35ede290, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.32
+      value: 2.48
       objectReference: {fileID: 0}
     - target: {fileID: 1517634604492484947, guid: c6ad84587c4add3419ed6f8e35ede290, type: 3}
       propertyPath: m_LocalPosition.y
@@ -812,8 +861,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerObj: {fileID: 1634809851}
   TrackedCamera: {fileID: 1529317718}
-  GoalObj: {fileID: 1999314558}
-  loggingEnable: 1
+  GoalObj: {fileID: 0}
+  loggingEnable: 0
   overwriteEnable: 0
   filename: Trial5
 --- !u!4 &953280534
@@ -867,10 +916,10 @@ MonoBehaviour:
   - {fileID: 2449341353758095693, guid: 09dcc55d22d83bb4cb97b2b74423f542, type: 3}
   wallObjectsCount: 4
   movingObjectsCount: 4
-  player: {fileID: 1634809851}
-  playerLocation: {x: 0, y: 0, z: 0}
-  target: {fileID: 1999314557}
-  targetLocation: {x: 2.76, y: 0.54, z: 0.62}
+  player: {fileID: 0}
+  playerLocation: {x: -2.8, y: 1.04, z: -2.66}
+  target: {fileID: 0}
+  targetLocation: {x: 0.05, y: 0.54, z: 0.66}
 --- !u!114 &1138957330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,6 +1092,10 @@ PrefabInstance:
       propertyPath: vertices.Array.data[7].z
       value: 1.65
       objectReference: {fileID: 0}
+    - target: {fileID: 4000013889601590, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.22
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
 --- !u!20 &1529317718 stripped
@@ -1173,7 +1226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3beb37446c08bd24189dc060a2773cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TrackedPlayerPos: {fileID: 1634809852}
+  TrackedPlayerPos: {fileID: 0}
   clickMarkerPrefab: {fileID: 1999314557}
 --- !u!120 &1921906847
 LineRenderer:
@@ -1306,3 +1359,35 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1517634604492484947, guid: c6ad84587c4add3419ed6f8e35ede290, type: 3}
   m_PrefabInstance: {fileID: 937159635}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2004495198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2004495199}
+  m_Layer: 0
+  m_Name: PlayerOffset
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2004495199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004495198}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.32, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 413654463}
+  m_Father: {fileID: 1634809852}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

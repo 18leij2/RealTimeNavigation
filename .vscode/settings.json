@@ -52,5 +52,6 @@
         "Temp/": true
     },
     "dotnet.preferCSharpExtension": true,
-    "dotnet.defaultSolution": "RealTimeNavigation.sln"
+    "dotnet.defaultSolution": "RealTimeNavigation.sln",
+    "dotnet.server.useOmnisharp": false
 }
