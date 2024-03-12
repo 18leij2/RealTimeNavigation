@@ -129,3 +129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   direction: {x: 1, y: 0, z: 0}
+  oscillate: 0
+  targetTime: 5
+  forwardTime: 0.5

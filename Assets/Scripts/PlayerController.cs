@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         path = new NavMeshPath();
-        agent.nextPosition = TrackedPlayerPos.position;
+        //agent.nextPosition = TrackedPlayerPos.position;
         // first arg is target
         if (agent.CalculatePath(clickMarkerPrefab.transform.position, path))
         {
@@ -35,14 +35,7 @@ public class PlayerController : MonoBehaviour
             DrawPath();
         }
     }
-    private void SetDestination(Vector3 target)
-    {
-        clickMarkerPrefab.SetActive(true);
-        clickMarkerPrefab.transform.SetParent(transform.parent, false); // set parent to the same parent as the player (to avoid scaling issues)
-        clickMarkerPrefab.transform.position = target;
-        agent.SetDestination(target);
 
-    }
     // Draw a path from the player to the destination (w Navmesh)
     void DrawPath(){
         // if straight line, no need to draw path
