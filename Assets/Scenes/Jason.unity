@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 92800725}
   - component: {fileID: 92800724}
   - component: {fileID: 92800728}
+  - component: {fileID: 92800729}
   m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
@@ -330,7 +331,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56de487916c802f4db2fd4b59c657964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movingObjects: []
+--- !u!114 &92800729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92800723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85da22da16d6f244c850c51b85931a6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleList: []
+  forwardProjectTime: 2
 --- !u!1 &131787569
 GameObject:
   m_ObjectHideFlags: 0
