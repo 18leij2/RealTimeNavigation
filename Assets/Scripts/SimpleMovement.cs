@@ -40,7 +40,7 @@ public class SimpleMovement : MonoBehaviour
         forwardSim["Frequency"] = obstacleTime;
         forwardSim["Velocity"] = speed;
 
-        simulate();
+        // simulate();
     }
 
     // Update is called once per frame
