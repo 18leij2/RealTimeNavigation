@@ -8,6 +8,7 @@ public class ForwardSimManager : MonoBehaviour
     public static ForwardSimManager instance;
     public List<GameObject> obstacleList = new List<GameObject>();
     public List<List<Vector3>> positionList = new List<List<Vector3>>();
+    public List<Vector3> projectedList = new List<Vector3>(); // list of all the projected positions
     public float forwardProjectTime;
     public GameObject[] obstacles = new GameObject[0];
 
@@ -60,6 +61,7 @@ public class ForwardSimManager : MonoBehaviour
             {
                 // Print each vector in the inner list
                 Debug.Log("Vector " + j + ": " + positionList[i][j]);
+                projectedList.Add(positionList[i][j]);
             }
         }
     }
