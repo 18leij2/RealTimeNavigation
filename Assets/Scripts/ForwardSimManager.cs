@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using UnityEngine;
 
@@ -30,10 +31,11 @@ public class ForwardSimManager : MonoBehaviour
         obstacles = GameObject.FindGameObjectsWithTag("Moving");
         foreach (GameObject obj in obstacles)
         {
+            Debug.Log("wtf");
             // later do an if check for within step-range
-            AddObject(obj);
+            obstacleList.Add(obj);
         }
-
+        //Debug.Log(obstacleList.Count);
         forwardProject();
     }
 
@@ -52,27 +54,25 @@ public class ForwardSimManager : MonoBehaviour
         }
 
         // Print the contents of the list of lists of vectors
-        Debug.Log("Contents of the list of lists of vectors:");
+        //Debug.Log("Contents of the list of lists of vectors:");
         for (int i = 0; i < positionList.Count; i++)
         {
-            Debug.Log("Inner List " + i + ":");
+            //Debug.Log("Inner List " + i + ":");
             // Iterate through the elements of the inner list
             for (int j = 0; j < positionList[i].Count; j++)
             {
                 // Print each vector in the inner list
-                Debug.Log("Vector " + j + ": " + positionList[i][j]);
-                projectedList.Add(positionList[i][j]);
+                //Debug.Log("Vector " + j + ": " + positionList[i][j]);
+                if (j == 1)
+                {
+                    projectedList.Add(positionList[i][j]);
+                }               
             }
         }
-    }
 
-    public void AddObject(GameObject obj)
-    {
-        obstacleList.Add(obj);
-    }
-
-    public void RemoveObject(GameObject obj)
-    {
-        obstacleList.Remove(obj);
+        for (int i = 0; i < projectedList.Count; i++)
+        {
+            Debug.Log("it's " + projectedList[i]);
+        }
     }
 }

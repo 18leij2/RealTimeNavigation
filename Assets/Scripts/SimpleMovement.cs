@@ -31,7 +31,7 @@ public class SimpleMovement : MonoBehaviour
         forwardProject = managerScript.forwardProjectTime;
 
         // add to the obstacle manager
-        ForwardSimManager.instance.AddObject(this.gameObject);
+        // ForwardSimManager.instance.AddObject(this.gameObject);
 
         obstacleTime = targetTime;
         forwardCount = 0;
@@ -103,6 +103,8 @@ public class SimpleMovement : MonoBehaviour
         List<Vector3> vectors = new List<Vector3>();
         vectors.Add(((List<Vector3>)forwardSim["Position"])[0]); // current position
         vectors.Add(((List<Vector3>)forwardSim["Position"])[((List<Vector3>)forwardSim["Position"]).Count - 1]); // position after the whole time step
+
+        //Debug.Log("vectors size :" + vectors.Count);
 
         //position = ((List<Vector3>)forwardSim["Position"])[0];
         //projection = ((List<Vector3>)forwardSim["Position"])[forwardSim.Count];
