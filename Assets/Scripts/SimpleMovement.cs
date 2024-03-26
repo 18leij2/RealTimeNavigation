@@ -16,6 +16,9 @@ public class SimpleMovement : MonoBehaviour
     private float forwardCount;
     public Dictionary<string, object> forwardSim = new Dictionary<string, object>();
 
+    public Vector3 position;
+    public Vector3 projection;
+
     // using forward manager's time
     private float forwardProject;
 
@@ -59,20 +62,21 @@ public class SimpleMovement : MonoBehaviour
         forwardCount -= Time.deltaTime;
         if (forwardCount <= 0.0f)
         {
-            simulate();
-            forwardCount = forwardProject;
-            Debug.Log("Position now: " + ((List<Vector3>)forwardSim["Position"])[0]);
-            Debug.Log("Position in " + forwardProject + " seconds: " + ((List<Vector3>)forwardSim["Position"])[forwardSim.Count]);
+            //simulate();
+            //forwardCount = forwardProject;
+            //Debug.Log("Position now: " + ((List<Vector3>)forwardSim["Position"])[0]);
+            //Debug.Log("Position in " + forwardProject + " seconds: " + ((List<Vector3>)forwardSim["Position"])[forwardSim.Count]);
             //Debug.Log("Future positions: " + ((List<Vector3>)forwardSim["Position"])[0] + " || " + ((List<Vector3>)forwardSim["Position"])[1] + " || " +
             //    ((List<Vector3>)forwardSim["Position"])[2] + " || " + ((List<Vector3>)forwardSim["Position"])[3] + " || " + ((List<Vector3>)forwardSim["Position"])[4]);
         }
     }
 
-    private void simulate()
+    public List<Vector3> simulate()
     {
         forwardSim["Position"] = new List<Vector3>();
 
         float interval = forwardProject / forwardTime;
+
         // Debug.Log("Interval is +" + interval);
 
         for (int i = 0; i < (interval + 1); i++)
@@ -95,6 +99,15 @@ public class SimpleMovement : MonoBehaviour
             // Update the value in the dictionary
             forwardSim["Position"] = positions;
         }
+
+        List<Vector3> vectors = new List<Vector3>();
+        vectors.Add(((List<Vector3>)forwardSim["Position"])[0]); // current position
+        vectors.Add(((List<Vector3>)forwardSim["Position"])[((List<Vector3>)forwardSim["Position"]).Count - 1]); // position after the whole time step
+
+        //position = ((List<Vector3>)forwardSim["Position"])[0];
+        //projection = ((List<Vector3>)forwardSim["Position"])[forwardSim.Count];
+
+        return vectors;
 
         // old code based on oscillating movement, we aren't using this
         //for (int i = 0; i < 0; i++) // i < 5
