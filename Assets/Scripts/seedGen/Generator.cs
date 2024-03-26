@@ -18,7 +18,7 @@ public class Generator : MonoBehaviour
     void Start()
     {
         player.transform.position = playerLocation;
-        target.transform.position = targetLocation;
+        //target.transform.position = targetLocation;
 
         for(int i = 0; i < wallObjectsCount; i++) {
             Vector3 pos = Random.insideUnitSphere * 7;
