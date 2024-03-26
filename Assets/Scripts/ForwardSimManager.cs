@@ -7,11 +7,11 @@ using UnityEngine;
 public class ForwardSimManager : MonoBehaviour
 {
     public static ForwardSimManager instance;
-    public List<GameObject> obstacleList = new List<GameObject>();
+    public List<GameObject> obstacleList = new List<GameObject>(); // list of soon-to-be implemented obstacles in range of step
     public List<List<Vector3>> positionList = new List<List<Vector3>>();
     public List<Vector3> projectedList = new List<Vector3>(); // list of all the projected positions
     public float forwardProjectTime;
-    public GameObject[] obstacles = new GameObject[0];
+    public List<GameObject> obstacles = new List<GameObject>(); // list of ALL obstacles
 
     private void Awake()
     {
@@ -28,10 +28,9 @@ public class ForwardSimManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        obstacles = GameObject.FindGameObjectsWithTag("Moving");
+        // obstacles = GameObject.FindGameObjectsWithTag("Moving");
         foreach (GameObject obj in obstacles)
         {
-            Debug.Log("wtf");
             // later do an if check for within step-range
             obstacleList.Add(obj);
         }
@@ -74,5 +73,10 @@ public class ForwardSimManager : MonoBehaviour
         {
             Debug.Log("it's " + projectedList[i]);
         }
+    }
+
+    public void AddObject(GameObject obj)
+    {
+        obstacles.Add(obj);
     }
 }

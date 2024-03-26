@@ -31,7 +31,7 @@ public class SimpleMovement : MonoBehaviour
         forwardProject = managerScript.forwardProjectTime;
 
         // add to the obstacle manager
-        // ForwardSimManager.instance.AddObject(this.gameObject);
+        ForwardSimManager.instance.AddObject(this.gameObject);
 
         obstacleTime = targetTime;
         forwardCount = 0;
