@@ -117,7 +117,7 @@ public class Logger : Singleton<Logger>
             "CameraAngY",
             "CameraAngZ",
             "GoalX",
-            "GoalY",
+            "GoalZ",
             "DistanceToGoal"
         };
 
@@ -156,7 +156,7 @@ public class Logger : Singleton<Logger>
         string cameraAngY = TrackedCamera.transform.eulerAngles.y.ToString();
         string cameraAngZ = TrackedCamera.transform.eulerAngles.z.ToString();
         string goalX = GoalObj.transform.position.x.ToString();
-        string goalY = GoalObj.transform.position.y.ToString();
+        string goalZ = GoalObj.transform.position.z.ToString();
         string distanceToGoal = Vector3.Distance(PlayerObj.transform.position, GoalObj.transform.position).ToString();
 
         // Array of data values
@@ -172,7 +172,7 @@ public class Logger : Singleton<Logger>
             cameraAngY,
             cameraAngZ,
             goalX,
-            goalY,
+            goalZ,
             distanceToGoal
         };
 
