@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
+    public Transform TrackedPlayerPos;
     private NavMeshAgent agent;
     private NavMeshPath path;
     private LineRenderer myLineRenderer;
@@ -24,7 +25,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        this.transform.position = TrackedPlayerPos.position;
         path = new NavMeshPath();
+        //agent.nextPosition = TrackedPlayerPos.position;
         // first arg is target
         if (agent.CalculatePath(clickMarkerPrefab.transform.position, path))
         {
@@ -33,14 +36,7 @@ public class PlayerController : MonoBehaviour
             DrawPath();
         }
     }
-    private void SetDestination(Vector3 target)
-    {
-        clickMarkerPrefab.SetActive(true);
-        clickMarkerPrefab.transform.SetParent(transform.parent, false); // set parent to the same parent as the player (to avoid scaling issues)
-        clickMarkerPrefab.transform.position = target;
-        agent.SetDestination(target);
 
-    }
     // Draw a path from the player to the destination (w Navmesh)
     void DrawPath(){
         // if straight line, no need to draw path
