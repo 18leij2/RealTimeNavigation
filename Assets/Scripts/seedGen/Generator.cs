@@ -36,6 +36,15 @@ public class Generator : MonoBehaviour
 
         for(int i = 0; i < movingObjectsCount; i++) {
             Vector3 pos = Random.insideUnitSphere * 7;
+            pos.y = 1.08f;
+            GameObject selected = movingObjects[Random.Range(0, movingObjects.Length)];
+            GameObject movobs = Instantiate(selected, pos, selected.transform.rotation);
+            SimpleMovement simpleMovementScript = movobs.GetComponent<SimpleMovement>();
+            Vector3 direction = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
+            direction.Normalize();
+            simpleMovementScript.direction = direction;
+
+            /*
             pos.y = 20;
             RaycastHit hit;
             if (Physics.Raycast(pos, Vector3.down, out hit)) {
@@ -49,7 +58,26 @@ public class Generator : MonoBehaviour
                 //movobs.direction = Vector3.Normalize(new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)));
                 //movobs.transform.rotation = Quaternion.Euler(-90, Random.Range(0, 360), 0);
             }
-            
+            */
+        }
+
+        InvokeRepeating("RollingSpawn", 0f, 2f);
+    }
+
+    void RollingSpawn() {
+        for (int i = 0; i < movingObjectsCount/3; i++) {
+            Vector3 pos = Random.insideUnitSphere * Random.Range(6f, 12f);
+            pos.y = 0;
+            if (pos.magnitude < 6f) {
+                pos = pos.normalized * 6f; 
+            }
+            pos.y = 1.08f;
+            GameObject selected = movingObjects[Random.Range(0, movingObjects.Length)];
+            GameObject movobs = Instantiate(selected, pos, selected.transform.rotation);
+            SimpleMovement simpleMovementScript = movobs.GetComponent<SimpleMovement>();
+            Vector3 direction = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
+            direction.Normalize();
+            simpleMovementScript.direction = direction;
         }
     }
 

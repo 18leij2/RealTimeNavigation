@@ -52,4 +52,16 @@ public class TestAstar : MonoBehaviour
             //Debug.Log(pathfinding.GetGrid().GetGridObject(pos).isWalkable);
         }
     }
+
+    public List<Vector3> addBuffer(Vector3[] obstaclepos) {
+        List<Vector3> obsbuffpos = new List<Vector3>();
+        Vector3 x = new Vector3(0.5f, 1, 0);
+        Vector3 z = new Vector3(0, 1, 0.5f);
+        foreach (Vector3 pos in obstaclepos) {
+            obsbuffpos.Add(pos);
+            obsbuffpos.Add(pos + x);
+
+        }
+        return obsbuffpos;
+    }
 }

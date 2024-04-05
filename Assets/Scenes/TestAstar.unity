@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -396,6 +396,10 @@ PrefabInstance:
       value: MovingBall (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2449341353758095693, guid: 09dcc55d22d83bb4cb97b2b74423f542, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2449341353758095693, guid: 09dcc55d22d83bb4cb97b2b74423f542, type: 3}
       propertyPath: m_TagString
       value: Moving
       objectReference: {fileID: 0}
@@ -728,6 +732,10 @@ PrefabInstance:
       value: MovingBall
       objectReference: {fileID: 0}
     - target: {fileID: 2449341353758095693, guid: 09dcc55d22d83bb4cb97b2b74423f542, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2449341353758095693, guid: 09dcc55d22d83bb4cb97b2b74423f542, type: 3}
       propertyPath: m_TagString
       value: Moving
       objectReference: {fileID: 0}
@@ -885,8 +893,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclepos:
-  - {x: 0, y: 0, z: 0}
-  - {x: 1, y: 0, z: 0}
+  - {x: -2, y: 1, z: 0}
+  - {x: 1, y: 1, z: 2}
   player: {fileID: 76444948}
   target: {fileID: 1999314557}
   scale: 1
