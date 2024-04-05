@@ -239,6 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleList: []
+  projectedList: []
   forwardProjectTime: 1
   obstacles: []
 --- !u!1 &131787569
@@ -888,7 +889,7 @@ MonoBehaviour:
   - {x: 1, y: 0, z: 0}
   player: {fileID: 76444948}
   target: {fileID: 1999314557}
-  scale: 0.5
+  scale: 1
 --- !u!4 &1989772887
 Transform:
   m_ObjectHideFlags: 0

@@ -26,6 +26,25 @@ public class SimpleMovement : MonoBehaviour
     void Start()
     {
         // find the specified forward simulation amount
+        //GameObject managerScriptObject = GameObject.Find("Floor");
+        //ForwardSimManager managerScript = managerScriptObject.GetComponent<ForwardSimManager>();
+        //forwardProject = managerScript.forwardProjectTime;
+
+        //// add to the obstacle manager
+        //ForwardSimManager.instance.AddObject(this.gameObject);
+
+        //obstacleTime = targetTime;
+        //forwardCount = 0;
+        //forwardSim["Position"] = new List<Vector3>();
+        //forwardSim["Vector"] = new List<Vector3>();
+        //forwardSim["Frequency"] = obstacleTime;
+        //forwardSim["Velocity"] = speed;
+
+        // simulate();
+    }
+
+    private void Awake()
+    {
         GameObject managerScriptObject = GameObject.Find("Floor");
         ForwardSimManager managerScript = managerScriptObject.GetComponent<ForwardSimManager>();
         forwardProject = managerScript.forwardProjectTime;
@@ -39,8 +58,6 @@ public class SimpleMovement : MonoBehaviour
         forwardSim["Vector"] = new List<Vector3>();
         forwardSim["Frequency"] = obstacleTime;
         forwardSim["Velocity"] = speed;
-
-        // simulate();
     }
 
     // Update is called once per frame

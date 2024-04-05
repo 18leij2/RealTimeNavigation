@@ -44,13 +44,16 @@ public class ForwardSimManager : MonoBehaviour
         
     }
 
-    public void forwardProject()
+    public List<Vector3> forwardProject()
     {
-        foreach (GameObject obj in obstacleList)
+        positionList.Clear();
+        foreach (GameObject obj in obstacles) // change to obstacleList later
         {
             SimpleMovement otherScript = obj.GetComponent<SimpleMovement>();
             positionList.Add(otherScript.simulate()); // adds a list of 2 vectors: index 0 is the current position, index 1 is the projected position
         }
+
+        projectedList.Clear();
 
         // Print the contents of the list of lists of vectors
         //Debug.Log("Contents of the list of lists of vectors:");
@@ -73,6 +76,8 @@ public class ForwardSimManager : MonoBehaviour
         {
             Debug.Log("it's " + projectedList[i]);
         }
+
+        return projectedList;
     }
 
     public void AddObject(GameObject obj)
