@@ -25,7 +25,6 @@ public class SimpleMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         // find the specified forward simulation amount
         //GameObject managerScriptObject = GameObject.Find("Floor");
         //ForwardSimManager managerScript = managerScriptObject.GetComponent<ForwardSimManager>();
@@ -59,18 +58,13 @@ public class SimpleMovement : MonoBehaviour
         forwardSim["Vector"] = new List<Vector3>();
         forwardSim["Frequency"] = obstacleTime;
         forwardSim["Velocity"] = speed;
-<<<<<<< Updated upstream
-=======
-        
-        // simulate();
->>>>>>> Stashed changes
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.Translate(direction * speed * Time.deltaTime);
-        
+
         if (oscillate)
         {
             obstacleTime -= Time.deltaTime;
