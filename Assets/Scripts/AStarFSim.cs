@@ -11,7 +11,7 @@ public class AStarFSim : MonoBehaviour
     private LineRenderer Astarline;
     public float obsradius = 0.5f;
     public float scale = 1f;
-    public float timestepsize = 1f;
+    public float timestepsize = 0.1f;
     private int astarstep;
     private List<Vector3> path = new List<Vector3>();
     private Pathfinding Astar;
@@ -37,11 +37,12 @@ public class AStarFSim : MonoBehaviour
 
         //initial player location
         playerlocation = player.transform.position;
-        path.Add(playerlocation);
+        path.Add(
+            playerlocation);
 
         int timestep = 1;
 
-        while ((grid.GetWorldPosition(tx, ty) - path[path.Count - 1]).magnitude > 0.5 && timestep < 8) {
+        while ((grid.GetWorldPosition(tx, ty) - path[path.Count - 1]).magnitude > 0.5) {
             //get forward sim
             GameObject managerScriptObject = GameObject.Find("Floor");
             ForwardSimManager managerScript = managerScriptObject.GetComponent<ForwardSimManager>();
@@ -49,15 +50,15 @@ public class AStarFSim : MonoBehaviour
 
             //get projected obstacle positions
             //Not Working !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            managerScript.forwardProjectTime = timestep;
+            managerScript.forwardProjectTime = timestep * timestepsize;
             List<Vector3> obstaclepos = managerScript.forwardProject();
 
             //DEBUG: PRINTS FORWARD SIMULATION OBJECT LOCATIONS
-            // Debug.Log("Forward Project Time is: " + managerScript.forwardProjectTime);
-            // Debug.Log("The projected obstacle positions are: ");
-            // foreach (Vector3 g in obstaclepos) {
-            //     Debug.Log(g);
-            // }
+            Debug.Log("Forward Project Time is: " + managerScript.forwardProjectTime);
+            Debug.Log("The projected obstacle positions are: ");
+            foreach (Vector3 g in obstaclepos) {
+                Debug.Log(g);
+            }
 
             //set obstacles
             setObstacles(obstaclepos);
