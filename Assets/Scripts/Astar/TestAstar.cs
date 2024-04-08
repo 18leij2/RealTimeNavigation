@@ -45,13 +45,12 @@ public class TestAstar : MonoBehaviour
         for (int i = 0; i < path.Count; i++) {
             points[i] = pathfinding.GetGrid().GetWorldPosition(path[i].x, path[i].y);
         }
-        //Debug.Log(string.Join(", ", points));
-        //Astarline.startWidth *= points.Length;
+
         Astarline.SetPositions(points);
     }
 
     public void setObstacles(Vector3[] obstaclepos) {
-        int[] negpos = new int[2] {-1, 1};
+        int[,] signs = {{-1, 1}, {1, -1}, {-1, -1}, {1, 1}};
         foreach (Vector3 pos in obstaclepos) {
             Grid<PathNode> grid = pathfinding.GetGrid();
             PathNode node = grid.GetGridObject(pos);
@@ -62,9 +61,9 @@ public class TestAstar : MonoBehaviour
             int nodeoffset = Mathf.Abs(temp.x - node.x);
             for (int i = 0; i < nodeoffset; i++) {
                 for (int j = 0; j < nodeoffset; j++) {
-                    foreach (int sign in negpos) {
-                        int x = node.x + i*sign;
-                        int y = node.y + j*sign;
+                    for (int k = 0; k < 4; k++) {
+                        int x = node.x + i*signs[k, 0];
+                        int y = node.y + j*signs[k, 1];
                         temp = grid.GetGridObject(x, y);
                         if (temp != null) {
                             temp.isWalkable = false;
@@ -75,17 +74,5 @@ public class TestAstar : MonoBehaviour
             }
             //Debug.Log(pathfinding.GetGrid().GetGridObject(pos).isWalkable);
         }
-    }
-
-    public List<Vector3> addBuffer(Vector3[] obstaclepos) {
-        List<Vector3> obsbuffpos = new List<Vector3>();
-        Vector3 x = new Vector3(0.5f, 1, 0);
-        Vector3 z = new Vector3(0, 1, 0.5f);
-        foreach (Vector3 pos in obstaclepos) {
-            obsbuffpos.Add(pos);
-            obsbuffpos.Add(pos + x);
-
-        }
-        return obsbuffpos;
     }
 }
