@@ -778,7 +778,7 @@ MonoBehaviour:
   target: {fileID: 1999314557}
   obsradius: 0.5
   scale: 1
-  timestep: 1
+  timestepsize: 1
 --- !u!4 &1481910191
 Transform:
   m_ObjectHideFlags: 0
@@ -986,6 +986,18 @@ PrefabInstance:
     - target: {fileID: 4129575525321952851, guid: 423e25a58609a86418bd7a1b3d0ec74c, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4129575525321952858, guid: 423e25a58609a86418bd7a1b3d0ec74c, type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4129575525321952859, guid: 423e25a58609a86418bd7a1b3d0ec74c, type: 3}
+      propertyPath: drag
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4129575525321952859, guid: 423e25a58609a86418bd7a1b3d0ec74c, type: 3}
+      propertyPath: moveSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4129575525321952863, guid: 423e25a58609a86418bd7a1b3d0ec74c, type: 3}
       propertyPath: m_RootOrder
