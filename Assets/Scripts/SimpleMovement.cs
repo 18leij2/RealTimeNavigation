@@ -73,6 +73,10 @@ public class SimpleMovement : MonoBehaviour
 
     public List<Vector3> simulate()
     {
+        GameObject managerScriptObject = GameObject.Find("Floor");
+        ForwardSimManager managerScript = managerScriptObject.GetComponent<ForwardSimManager>();
+        forwardProject = managerScript.forwardProjectTime;
+
         forwardSim["Position"] = new List<Vector3>();
 
         float interval = forwardProject / forwardTime;
