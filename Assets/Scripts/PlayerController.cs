@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = TrackedPlayerPos.position;
+        //this.transform.position = TrackedPlayerPos.position;
         path = new NavMeshPath();
         //agent.nextPosition = TrackedPlayerPos.position;
         // first arg is target
