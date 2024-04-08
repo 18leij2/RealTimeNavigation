@@ -11,6 +11,7 @@ public class TestAstar : MonoBehaviour
     private Vector3 playerlocation;
     private Vector3 targetlocation;
     private LineRenderer Astarline;
+    public float obsradius = 0.5f;
     public float scale = 1f;
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class TestAstar : MonoBehaviour
         Astarline.startWidth = 0.1f;
         Astarline.endWidth = 0.1f;
 
+        //set obstacles
         pathfinding = new Pathfinding((int)(8 * (1/scale)), (int)(8 * (1/scale)), 1f*scale);
         setObstacles(obstaclepos);
     }
@@ -35,6 +37,8 @@ public class TestAstar : MonoBehaviour
         pathfinding.GetGrid().GetXY(targetlocation, out tx, out ty);
         List<PathNode> path = pathfinding.FindPath(px, py, tx, ty);
 
+        
+
         LineRenderer Astarline = GetComponent<LineRenderer>();
         Astarline.positionCount = path.Count;
         Vector3[] points = new Vector3[path.Count];
@@ -46,22 +50,29 @@ public class TestAstar : MonoBehaviour
     }
 
     public void setObstacles(Vector3[] obstaclepos) {
+        int[,] signs = {{-1, 1}, {1, -1}, {-1, -1}, {1, 1}};
         foreach (Vector3 pos in obstaclepos) {
-            PathNode node = pathfinding.GetGrid().GetGridObject(pos);
-            node.isWalkable = false;
+            Grid<PathNode> grid = pathfinding.GetGrid();
+            PathNode node = grid.GetGridObject(pos);
+            PathNode temp = grid.GetGridObject(pos + new Vector3(obsradius, 0, 0));
+            if (temp == null) {
+                temp = grid.GetGridObject(pos - new Vector3(obsradius, 0, 0));
+            }
+            int nodeoffset = Mathf.Abs(temp.x - node.x);
+            for (int i = 0; i < nodeoffset; i++) {
+                for (int j = 0; j < nodeoffset; j++) {
+                    for (int k = 0; k < 4; k++) {
+                        int x = node.x + i*signs[k, 0];
+                        int y = node.y + j*signs[k, 1];
+                        temp = grid.GetGridObject(x, y);
+                        if (temp != null) {
+                            temp.isWalkable = false;
+                        }
+                    }
+                    
+                }
+            }
             //Debug.Log(pathfinding.GetGrid().GetGridObject(pos).isWalkable);
         }
-    }
-
-    public List<Vector3> addBuffer(Vector3[] obstaclepos) {
-        List<Vector3> obsbuffpos = new List<Vector3>();
-        Vector3 x = new Vector3(0.5f, 1, 0);
-        Vector3 z = new Vector3(0, 1, 0.5f);
-        foreach (Vector3 pos in obstaclepos) {
-            obsbuffpos.Add(pos);
-            obsbuffpos.Add(pos + x);
-
-        }
-        return obsbuffpos;
     }
 }

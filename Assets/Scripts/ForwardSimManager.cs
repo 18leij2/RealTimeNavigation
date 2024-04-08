@@ -72,10 +72,10 @@ public class ForwardSimManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < projectedList.Count; i++)
-        {
-            Debug.Log("it's " + projectedList[i]);
-        }
+        // for (int i = 0; i < projectedList.Count; i++)
+        // {
+        //     Debug.Log("it's " + projectedList[i]);
+        // }
 
         return projectedList;
     }
