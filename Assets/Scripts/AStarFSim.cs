@@ -131,4 +131,15 @@ public class AStarFSim : MonoBehaviour
             }
         }
     }
+
+    private void OnDrawGizmos() {
+        if (grid != null) {
+            for (int i = 0; i < grid.GetWidth(); i++) {
+                for (int j = 0; j < grid.GetHeight(); j++) {
+                    Gizmos.color = grid.GetGridObject(i, j).isWalkable ? Color.yellow : Color.red;
+                    Gizmos.DrawSphere(grid.GetWorldPosition(i, j), .1F);
+                }
+            }
+        }
+    }
 }

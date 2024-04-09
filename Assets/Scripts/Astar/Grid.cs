@@ -102,4 +102,8 @@ public class Grid<TGridObject> {
         GetXY(worldPosition, out x, out y);
         return GetGridObject(x, y);
     }
+
+    public TGridObject[,] GetGridArray() {
+        return gridArray;
+    }
 }
