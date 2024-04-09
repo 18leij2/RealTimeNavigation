@@ -13,6 +13,8 @@ public class TestAstar : MonoBehaviour
     private LineRenderer Astarline;
     public float obsradius = 0.5f;
     public float scale = 1f;
+
+    private Grid<PathNode> grid;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +25,10 @@ public class TestAstar : MonoBehaviour
 
         //set obstacles
         pathfinding = new Pathfinding((int)(8 * (1/scale)), (int)(8 * (1/scale)), 1f*scale);
+        grid = pathfinding.GetGrid();
         setObstacles(obstaclepos);
+
+        OnDrawGizmos();
     }
 
     // Update is called once per frame
@@ -73,6 +78,17 @@ public class TestAstar : MonoBehaviour
                 }
             }
             //Debug.Log(pathfinding.GetGrid().GetGridObject(pos).isWalkable);
+        }
+    }
+
+    private void OnDrawGizmos() {
+        if (grid != null) {
+            for (int i = 0; i < grid.GetWidth(); i++) {
+                for (int j = 0; j < grid.GetHeight(); j++) {
+                    Gizmos.color = grid.GetGridObject(i, j).isWalkable ? Color.yellow : Color.red;
+                    Gizmos.DrawSphere(grid.GetWorldPosition(i, j), .1F);
+                }
+            }
         }
     }
 }

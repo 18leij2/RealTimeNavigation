@@ -61,15 +61,19 @@ public class AStarFSim : MonoBehaviour
             //     Debug.Log(g);
             // }
 
+            if (timestep*timestepsize == 0.1) {
+                Debug.Log("here are the obstacle positions");
+                foreach (Vector3 pos in obstaclepos) {
+                    Debug.Log(pos);
+                }
+                OnDrawGizmos();
+            }
+
             //set obstacles
             setObstacles(obstaclepos);
             //Debug.Log(timestep*timestepsize);
-            if (Mathf.Abs((float)(timestep * timestepsize) - 0.1f) < 0.00001f) {
-                Debug.Log("drawing square");
-                foreach (Vector3 pos in obstaclepos) {
-                    drawObst(pos);
-                }
-            }
+            
+            
 
             //astar path
             int px, py;
@@ -114,6 +118,7 @@ public class AStarFSim : MonoBehaviour
             // }
             // Debug.Log(timestep);
             // Debug.Log(timestep * timestepsize);
+
         }
 
         // DEBUG: PRINTS THE FORWARD SIMULATED PATH
@@ -135,11 +140,18 @@ public class AStarFSim : MonoBehaviour
 
     public void setObstacles(IEnumerable<Vector3> obstaclepos, bool clear = false) {
         int[,] signs = {{-1, 1}, {1, -1}, {-1, -1}, {1, 1}};
-        foreach (Vector3 pos in obstaclepos) {
+        if (obstaclepos == null) {
+            return;
+        }
+        foreach (Vector3 pos in obstaclepos ?? new List<Vector3>()) {
             PathNode node = grid.GetGridObject(pos);
             PathNode temp = grid.GetGridObject(pos + new Vector3(obsradius, 0, 0));
-            for (int i = 0; i < obsradius; i++) {
-                for (int j = 0; j < obsradius; j++) {
+            if (temp == null) {
+                temp = grid.GetGridObject(pos - new Vector3(obsradius, 0, 0));
+            }
+            int nodeoffset = Mathf.Abs(temp.x - node.x);
+            for (int i = 0; i < nodeoffset; i++) {
+                for (int j = 0; j < nodeoffset; j++) {
                     for (int k = 0; k < 4; k++) {
                         int x = node.x + i*signs[k, 0];
                         int y = node.y + j*signs[k, 1];
@@ -149,6 +161,17 @@ public class AStarFSim : MonoBehaviour
                         }
                     }
                     
+                }
+            }
+        }
+    }
+
+    public void clearObstacles() {
+        for (int i = 0; i < grid.GetWidth(); i++) {
+            for (int j = 0; j < grid.GetHeight(); j++) {
+                PathNode node = grid.GetGridObject(i, j);
+                if (!node.isWalkable) {
+                    node.isWalkable = true;
                 }
             }
         }
