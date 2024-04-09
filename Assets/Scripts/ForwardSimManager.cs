@@ -35,7 +35,7 @@ public class ForwardSimManager : MonoBehaviour
             obstacleList.Add(obj);
         }
         //Debug.Log(obstacleList.Count);
-        forwardProject();
+        // forwardProject(1);
     }
 
     // Update is called once per frame
@@ -44,13 +44,13 @@ public class ForwardSimManager : MonoBehaviour
         
     }
 
-    public List<Vector3> forwardProject()
+    public List<Vector3> forwardProject(float forwardTime)
     {
         positionList.Clear();
         foreach (GameObject obj in obstacles) // change to obstacleList later
         {
             SimpleMovement otherScript = obj.GetComponent<SimpleMovement>();
-            positionList.Add(otherScript.simulate()); // adds a list of 2 vectors: index 0 is the current position, index 1 is the projected position
+            positionList.Add(otherScript.simulate(forwardTime)); // adds a list of 2 vectors: index 0 is the current position, index 1 is the projected position
         }
 
         projectedList.Clear();

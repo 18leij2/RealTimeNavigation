@@ -40,7 +40,7 @@ public class SimpleMovement : MonoBehaviour
         forwardSim["Frequency"] = obstacleTime;
         forwardSim["Velocity"] = speed;
 
-        simulate();
+        // simulate();
     }
 
     // Update is called once per frame
@@ -71,7 +71,7 @@ public class SimpleMovement : MonoBehaviour
         }
     }
 
-    public List<Vector3> simulate()
+    public List<Vector3> simulate(float timeForward)
     {
         GameObject managerScriptObject = GameObject.Find("Floor");
         ForwardSimManager managerScript = managerScriptObject.GetComponent<ForwardSimManager>();
@@ -83,26 +83,17 @@ public class SimpleMovement : MonoBehaviour
 
         // Debug.Log("Interval is +" + interval);
 
-        for (int i = 0; i < (interval + 1); i++)
-        {
-            // Cast the value to List<Vector3> before adding elements
-            List<Vector3> positions = (List<Vector3>)forwardSim["Position"];
+        // Cast the value to List<Vector3> before adding elements
+        List<Vector3> positions = (List<Vector3>)forwardSim["Position"];
 
-            // Calculate new position
-            if (i == 0)
-            {
-                Vector3 newPosition = gameObject.transform.position;
-                positions.Add(newPosition);
-            }
-            else
-            {
-                Vector3 newPosition = gameObject.transform.position + (direction * speed * forwardTime * i);
-                positions.Add(newPosition);
-            }
+        // add the starting position
+        positions.Add(gameObject.transform.position);
 
-            // Update the value in the dictionary
-            forwardSim["Position"] = positions;
-        }
+        // add the projected position
+        Vector3 newPosition = gameObject.transform.position + (direction * speed * timeForward);
+        positions.Add(newPosition);
+
+        forwardSim["Position"] = positions;
 
         List<Vector3> vectors = new List<Vector3>();
         vectors.Add(((List<Vector3>)forwardSim["Position"])[0]); // current position

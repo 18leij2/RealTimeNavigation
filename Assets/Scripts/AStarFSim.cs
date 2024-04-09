@@ -11,7 +11,7 @@ public class AStarFSim : MonoBehaviour
     private LineRenderer Astarline;
     public float obsradius = 0.5f;
     public float scale = 1f;
-    public float timestepsize = 1f;
+    public float timestepsize = 0.1f;
     private int astarstep;
     private List<Vector3> path = new List<Vector3>();
     private Pathfinding Astar;
@@ -39,25 +39,26 @@ public class AStarFSim : MonoBehaviour
         playerlocation = player.transform.position;
         path.Add(playerlocation);
 
-        int timestep = 1;
+        float timestep = 1;
 
-        while ((grid.GetWorldPosition(tx, ty) - path[path.Count - 1]).magnitude > 0.5 && timestep < 8) {
+        while ((grid.GetWorldPosition(tx, ty) - path[path.Count - 1]).magnitude > 0.5) {
             //get forward sim
             GameObject managerScriptObject = GameObject.Find("Floor");
             ForwardSimManager managerScript = managerScriptObject.GetComponent<ForwardSimManager>();
             
 
             //get projected obstacle positions
-            //Not Working !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // is working...
             managerScript.forwardProjectTime = timestep;
-            List<Vector3> obstaclepos = managerScript.forwardProject();
+            List<Vector3> obstaclepos = managerScript.forwardProject(timestepsize);
 
             //DEBUG: PRINTS FORWARD SIMULATION OBJECT LOCATIONS
-            // Debug.Log("Forward Project Time is: " + managerScript.forwardProjectTime);
-            // Debug.Log("The projected obstacle positions are: ");
-            // foreach (Vector3 g in obstaclepos) {
-            //     Debug.Log(g);
-            // }
+            Debug.Log("Forward Project Time is: " + managerScript.forwardProjectTime);
+            Debug.Log("The projected obstacle positions are: ");
+            foreach (Vector3 g in obstaclepos)
+            {
+                Debug.Log(g);
+            }
 
             //set obstacles
             setObstacles(obstaclepos);
@@ -84,7 +85,8 @@ public class AStarFSim : MonoBehaviour
             setObstacles(obstaclepos, clear: true);
 
             //set player position and next timestep
-            timestep++;
+            timestep += 1;
+            timestepsize += (float) 0.1;
             playerlocation = path[path.Count - 1];
         }
 
