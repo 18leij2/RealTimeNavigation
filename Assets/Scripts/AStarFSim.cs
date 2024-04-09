@@ -37,7 +37,8 @@ public class AStarFSim : MonoBehaviour
 
         //initial player location
         playerlocation = player.transform.position;
-        path.Add(playerlocation);
+        path.Add(
+            playerlocation);
 
         float timestep = 1;
 
@@ -55,8 +56,7 @@ public class AStarFSim : MonoBehaviour
             //DEBUG: PRINTS FORWARD SIMULATION OBJECT LOCATIONS
             Debug.Log("Forward Project Time is: " + managerScript.forwardProjectTime);
             Debug.Log("The projected obstacle positions are: ");
-            foreach (Vector3 g in obstaclepos)
-            {
+            foreach (Vector3 g in obstaclepos) {
                 Debug.Log(g);
             }
 
