@@ -25,9 +25,8 @@ public class AStarFSim : MonoBehaviour
         Astarline.endWidth = 0.1f;
         Astar = new Pathfinding((int)(8 * (1/scale)), (int)(8 * (1/scale)), scale);
 
-        astarstep = (int)(1/scale);
         grid = Astar.GetGrid();
-
+        astarstep = Mathf.RoundToInt(timestepsize/scale);
         
 
         //target location
@@ -37,10 +36,12 @@ public class AStarFSim : MonoBehaviour
 
         //initial player location
         playerlocation = player.transform.position;
-        path.Add(
-            playerlocation);
+        path.Add(playerlocation);
 
-        float timestep = 1;
+        int timestep = 1;
+        int steppointer = 1;
+
+        // Debug.Log(astarstep);
 
         while ((grid.GetWorldPosition(tx, ty) - path[path.Count - 1]).magnitude > 0.5) {
             //get forward sim
@@ -50,18 +51,25 @@ public class AStarFSim : MonoBehaviour
 
             //get projected obstacle positions
             // is working...
-            managerScript.forwardProjectTime = timestep;
-            List<Vector3> obstaclepos = managerScript.forwardProject(timestepsize);
+            managerScript.forwardProjectTime = timestep * timestepsize;
+            List<Vector3> obstaclepos = managerScript.forwardProject(timestep * timestepsize);
 
             //DEBUG: PRINTS FORWARD SIMULATION OBJECT LOCATIONS
-            Debug.Log("Forward Project Time is: " + managerScript.forwardProjectTime);
-            Debug.Log("The projected obstacle positions are: ");
-            foreach (Vector3 g in obstaclepos) {
-                Debug.Log(g);
-            }
+            // Debug.Log("Forward Project Time is: " + managerScript.forwardProjectTime);
+            // Debug.Log("The projected obstacle positions are: ");
+            // foreach (Vector3 g in obstaclepos) {
+            //     Debug.Log(g);
+            // }
 
             //set obstacles
             setObstacles(obstaclepos);
+            //Debug.Log(timestep*timestepsize);
+            if (Mathf.Abs((float)(timestep * timestepsize) - 0.1f) < 0.00001f) {
+                Debug.Log("drawing square");
+                foreach (Vector3 pos in obstaclepos) {
+                    drawObst(pos);
+                }
+            }
 
             //astar path
             int px, py;
@@ -76,21 +84,39 @@ public class AStarFSim : MonoBehaviour
 
             //add to forwardsimed path
             //Need Changes For Optimization(not now lol)
-            for (int i = 0; i < Mathf.Min(astarstep, steppath.Count-1); i++) {
-                PathNode node = steppath[i+1];
-                path.Add(grid.GetWorldPosition(node.x, node.y));
+            if (astarstep == 0) {
+                if ((float)(timestepsize/scale) * steppointer > 1) {
+                    for (int i = 0; i < Mathf.Min(Mathf.RoundToInt((float)(timestepsize/scale) * steppointer), steppath.Count-1); i++) {
+                        PathNode node = steppath[i+1];
+                        path.Add(grid.GetWorldPosition(node.x, node.y));
+                    }
+                    clearObstacles();
+                    steppointer = 1;
+                } else {
+                    steppointer++;
+                }
+            } else {
+                for (int i = 0; i < Mathf.Min(astarstep, steppath.Count-1); i++) {
+                    PathNode node = steppath[i+1];
+                    path.Add(grid.GetWorldPosition(node.x, node.y));
+                }
+                //clear obstacles
+                setObstacles(obstaclepos, clear: true);
             }
-
-            //clear obstacles
-            setObstacles(obstaclepos, clear: true);
-
             //set player position and next timestep
             timestep += 1;
-            timestepsize += (float) 0.1;
             playerlocation = path[path.Count - 1];
+
+            //DEBUG: PRINTS THE FORWARD SIMULATED PATH
+            // Debug.Log("Forward Path");
+            // foreach (Vector3 p in path) {
+            //     Debug.Log(p);
+            // }
+            // Debug.Log(timestep);
+            // Debug.Log(timestep * timestepsize);
         }
 
-        //DEBUG: PRINTS THE FORWARD SIMULATED PATH
+        // DEBUG: PRINTS THE FORWARD SIMULATED PATH
         // Debug.Log("Forward Path");
         // foreach (Vector3 p in path) {
         //     Debug.Log(p);
@@ -112,12 +138,8 @@ public class AStarFSim : MonoBehaviour
         foreach (Vector3 pos in obstaclepos) {
             PathNode node = grid.GetGridObject(pos);
             PathNode temp = grid.GetGridObject(pos + new Vector3(obsradius, 0, 0));
-            if (temp == null) {
-                temp = grid.GetGridObject(pos - new Vector3(obsradius, 0, 0));
-            }
-            int nodeoffset = Mathf.Abs(temp.x - node.x);
-            for (int i = 0; i < nodeoffset; i++) {
-                for (int j = 0; j < nodeoffset; j++) {
+            for (int i = 0; i < obsradius; i++) {
+                for (int j = 0; j < obsradius; j++) {
                     for (int k = 0; k < 4; k++) {
                         int x = node.x + i*signs[k, 0];
                         int y = node.y + j*signs[k, 1];
