@@ -17,11 +17,14 @@ public class Grid<TGridObject> {
     private Vector3 originPosition;
     private TGridObject[,] gridArray;
 
+    private Func<Grid<TGridObject>, int, int, TGridObject> internalFunc;
+
     public Grid(int width, int height, float cellSize, Vector3 originPosition, Func<Grid<TGridObject>, int, int, TGridObject> createGridObject) {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
         this.originPosition = originPosition;
+        this.internalFunc = createGridObject;
 
         gridArray = new TGridObject[width, height];
 
@@ -106,4 +109,19 @@ public class Grid<TGridObject> {
     public TGridObject[,] GetGridArray() {
         return gridArray;
     }
+
+    public Grid<TGridObject> CopyGrid() {
+        // Create a new Grid instance with the same parameters as the original grid
+        Grid<TGridObject> copiedGrid = new Grid<TGridObject>(width, height, cellSize, originPosition, internalFunc);
+
+        // Copy the grid array
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                copiedGrid.SetGridObject(x, y, gridArray[x, y]);
+            }
+        }
+
+        return copiedGrid;
+    }
+
 }

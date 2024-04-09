@@ -61,19 +61,20 @@ public class AStarFSim : MonoBehaviour
             //     Debug.Log(g);
             // }
 
-            if (timestep*timestepsize == 0.1) {
-                Debug.Log("here are the obstacle positions");
-                foreach (Vector3 pos in obstaclepos) {
-                    Debug.Log(pos);
-                }
-                OnDrawGizmos();
-            }
+            //Debug.Log(timestep*timestepsize);
+            
 
             //set obstacles
             setObstacles(obstaclepos);
             //Debug.Log(timestep*timestepsize);
             
-            
+            if (timestep*timestepsize == 0.1f) {
+                Debug.Log("here are the obstacle positions");
+                foreach (Vector3 pos in obstaclepos) {
+                    Debug.Log(pos);
+                }
+                RecordGrid();
+            }
 
             //astar path
             int px, py;
@@ -143,8 +144,9 @@ public class AStarFSim : MonoBehaviour
         if (obstaclepos == null) {
             return;
         }
-        foreach (Vector3 pos in obstaclepos ?? new List<Vector3>()) {
+        foreach (Vector3 pos in obstaclepos) {
             PathNode node = grid.GetGridObject(pos);
+            if (node == null) {return;}
             PathNode temp = grid.GetGridObject(pos + new Vector3(obsradius, 0, 0));
             if (temp == null) {
                 temp = grid.GetGridObject(pos - new Vector3(obsradius, 0, 0));
@@ -177,12 +179,18 @@ public class AStarFSim : MonoBehaviour
         }
     }
 
+    public void RecordGrid() {
+        lastGrid = grid.CopyGrid();
+
+    }
+
+    Grid<PathNode> lastGrid = null;
     private void OnDrawGizmos() {
-        if (grid != null) {
-            for (int i = 0; i < grid.GetWidth(); i++) {
-                for (int j = 0; j < grid.GetHeight(); j++) {
-                    Gizmos.color = grid.GetGridObject(i, j).isWalkable ? Color.yellow : Color.red;
-                    Gizmos.DrawSphere(grid.GetWorldPosition(i, j), .1F);
+        if (lastGrid != null) {
+            for (int i = 0; i < lastGrid.GetWidth(); i++) {
+                for (int j = 0; j < lastGrid.GetHeight(); j++) {
+                    Gizmos.color = lastGrid.GetGridObject(i, j).isWalkable ? Color.yellow : Color.red;
+                    Gizmos.DrawSphere(lastGrid.GetWorldPosition(i, j), .1F);
                 }
             }
         }
