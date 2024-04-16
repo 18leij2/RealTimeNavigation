@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/DestroySelf.cs.meta
+guid: dc8dca1f2a3a4c34a999ac624d7739c6
+========
+guid: f639a2ba220c76c4fbeb7676bd69fc33
+>>>>>>>> PPOTraining:Assets/Scripts/PathFinderAgent.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

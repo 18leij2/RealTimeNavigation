@@ -5,6 +5,16 @@ TagManager:
   serializedVersion: 2
   tags:
   - lvlexit
+  - Moving
+  - Waypoint
+  - AutonomousVehicle
+  - Unwalkable
+  - People
+  - Bounds
+  - Walkable
+  - Road
+  - Semiwalkable
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -14,8 +24,8 @@ TagManager:
   - UI
   - Ground
   - Recordable
-  - 
-  - 
+  - People
+  - 'AutonomousVehicle '
   - 
   - 
   - 
