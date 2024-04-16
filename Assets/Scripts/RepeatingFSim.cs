@@ -40,13 +40,14 @@ public class RepeatingFSim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         targetlocation = target.transform.position;
         playerlocation = player.transform.position;
 
-        List<Vector3> fsimpath = FSimPath(targetlocation, playerlocation);
-        Astarline.positionCount = fsimpath.Count;
-        Astarline.SetPositions(fsimpath.ToArray());
+        if ((targetlocation - playerlocation).magnitude > 1) {
+            List<Vector3> fsimpath = FSimPath(targetlocation, playerlocation);
+            Astarline.positionCount = fsimpath.Count;
+            Astarline.SetPositions(fsimpath.ToArray());
+        }
 
     }
 
@@ -91,13 +92,13 @@ public class RepeatingFSim : MonoBehaviour
             setObstacles(obstaclepos);
             //Debug.Log(timestep*timestepsize);
             
-            if (timestep*timestepsize == 0.1f) {
-                Debug.Log("here are the obstacle positions");
-                foreach (Vector3 pos in obstaclepos) {
-                    Debug.Log(pos);
-                }
-                RecordGrid();
-            }
+            // if (timestep*timestepsize == 0.1f) {
+            //     Debug.Log("here are the obstacle positions");
+            //     foreach (Vector3 pos in obstaclepos) {
+            //         Debug.Log(pos);
+            //     }
+            //     RecordGrid();
+            // }
 
             //astar path
             int px, py;
