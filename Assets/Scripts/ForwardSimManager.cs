@@ -6,12 +6,23 @@ using UnityEngine;
 
 public class ForwardSimManager : MonoBehaviour
 {
+    public GameObject player;
+
     public static ForwardSimManager instance;
     public List<GameObject> obstacleList = new List<GameObject>(); // list of soon-to-be implemented obstacles in range of step
     public List<List<Vector3>> positionList = new List<List<Vector3>>();
     public List<Vector3> projectedList = new List<Vector3>(); // list of all the projected positions
     public float forwardProjectTime;
     public List<GameObject> obstacles = new List<GameObject>(); // list of ALL obstacles
+
+    // information for the visualizer
+    public bool visualizer = false;
+    public bool forwardSimmer = false;
+    public float forwardAmount;
+    public float forwardRange;
+    public GameObject forwardBall;
+    public GameObject forwardBallHolder;
+    public float amountScale = 10;
 
     private void Awake()
     {
@@ -41,7 +52,33 @@ public class ForwardSimManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            visualizer = true;
+            forwardSimmer = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            visualizer = false;
+            forwardSimmer = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            visualizer = false;
+            forwardSimmer = false;
+        }
+
+        if (visualizer)
+        {
+            forwardVisualize(forwardAmount, forwardRange);
+            visualizer = false;
+        }
+        else if (forwardSimmer)
+        {
+            constantVisualize(forwardAmount, forwardRange);
+        }
     }
 
     public List<Vector3> forwardProject(float forwardTime)
@@ -83,5 +120,45 @@ public class ForwardSimManager : MonoBehaviour
     public void AddObject(GameObject obj)
     {
         obstacles.Add(obj);
+    }
+
+    public void forwardVisualize(float amount, float range)
+    {
+        // clear previous objects
+        for (int i = forwardBallHolder.transform.childCount - 1; i >= 0; i--)
+        {
+            // Destroy each child object
+            Destroy(forwardBallHolder.transform.GetChild(i).gameObject);
+        }
+
+        foreach (GameObject obj in obstacleList) // change to obstacleList later
+        {
+            SimpleMovement otherScript = obj.GetComponent<SimpleMovement>();
+            Vector3 futurePosition = (otherScript.simulate(amount))[1];
+            Vector3 directionVector = futurePosition - obj.transform.position;
+            directionVector.Normalize();
+            float distance = (obj.transform.position - player.transform.position).magnitude;
+            futurePosition = futurePosition + (directionVector / 2 * distance);
+            GameObject newForwardBall = Instantiate(forwardBall, futurePosition, Quaternion.identity);
+            newForwardBall.transform.parent = forwardBallHolder.transform;
+        }
+    }
+
+    public void constantVisualize(float amount, float range)
+    {
+        // clear previous objects
+        for (int i = forwardBallHolder.transform.childCount - 1; i >= 0; i--)
+        {
+            // Destroy each child object
+            Destroy(forwardBallHolder.transform.GetChild(i).gameObject);
+        }
+
+        foreach (GameObject obj in obstacleList) // change to obstacleList later
+        {
+            SimpleMovement otherScript = obj.GetComponent<SimpleMovement>();
+            Vector3 futurePosition = (otherScript.simulate(amount * amountScale))[1];
+            GameObject newForwardBall = Instantiate(forwardBall, futurePosition, Quaternion.identity);
+            newForwardBall.transform.parent = forwardBallHolder.transform;
+        }
     }
 }
